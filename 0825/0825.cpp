@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <vector>
 
 //template<class T>T max(T a, T b)
 //{
@@ -40,26 +41,61 @@
 //	std::cout << data[5] << std::endl;
 //}
 
-template<typename T>struct IsPointer
+//template<typename T>struct IsPointer
+//{
+//	static constexpr bool value = false;
+//};
+//
+//template <typename U>struct IsPointer<U*>
+//{
+//	static constexpr bool value = true;
+//};
+//
+//struct NotPointer : IsPointer<int>
+//{
+//
+//};
+//
+//int main()
+//{
+//	std::cout << IsPointer<int>::value << std::endl;
+//	std::cout << IsPointer<int*>::value << std::endl;
+//	std::cout << IsPointer<float>::value << std::endl;
+//	std::cout << IsPointer<float*>::value << std::endl;
+//	std::cout << NotPointer::value << std::endl;
+//}
+
+//　演習問題①：配列を判定する
+template<typename T>struct IsArray
 {
 	static constexpr bool value = false;
 };
 
-template <typename U>struct IsPointer<U*>
+template<typename U, std::size_t N>struct IsArray<U[N]>
 {
 	static constexpr bool value = true;
 };
 
-struct NotPointer : IsPointer<int>
+//　演習問題②：constを判定する
+template<typename T>struct IsConst
 {
+	static constexpr bool value = false;
+};
 
+template<typename U>struct IsConst<const U>
+{
+	static constexpr bool value = true;
 };
 
 int main()
 {
-	std::cout << IsPointer<int>::value << std::endl;
-	std::cout << IsPointer<int*>::value << std::endl;
-	std::cout << IsPointer<float>::value << std::endl;
-	std::cout << IsPointer<float*>::value << std::endl;
-	std::cout << NotPointer::value << std::endl;
+	std::cout << "演習問題①" << std::endl;
+	std::cout << IsArray<int>::value << std::endl;
+	std::cout << IsArray<int[10]>::value << std::endl;
+	std::cout << IsArray<float[5]>::value << std::endl;
+	std::cout << "演習問題②" << std::endl;
+	std::cout << IsConst<int>::value << std::endl;
+	std::cout << IsConst<const int>::value << std::endl;
+	std::cout << IsConst<float>::value << std::endl;
+	std::cout << IsConst<const float>::value << std::endl;
 }
